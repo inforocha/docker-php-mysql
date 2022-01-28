@@ -1,0 +1,53 @@
+version: '3.5'
+services:
+  mysql:
+    container_name: mysql_teste #nome do container, nao podem existir containers com mesmo nome
+    image: inforgeneses/mysql:5.1.73 # imagem que ele irah usar, para mudar a versao basta alterar o numero do php, ex: php/7.2-apache 
+    build:
+      context: docker/mysql/5.1.73 # a pasta de onde ele pega o dockerfile e a configuracao do container
+    ports: # porta da minha maquina:porta do container
+      - "3307:3306"
+    networks: # nome da rede criada mais abaixo com a tag 'networks', todos que estiverem na mesma rede se comunicam
+      - net_local
+    volumes: # diretorio da minha maquina:diretorio do container
+      - ${PWD}/mysql_data3:/var/lib/mysql
+      - ${PWD}/docker/mysql/databases:/databases
+
+  php:
+    container_name: php #nome do container, nao podem existir containers com mesmo nome
+    image: php/7.4-apache # imagem que ele irah usar, para mudar a versao basta alterar o numero do php, ex: php/7.2-apache 
+    build:
+      context: docker/php/7.4 # a pasta de onde ele pega o dockerfile e a configuracao do container
+    ports: # porta da minha maquina:porta do container
+      - "8081:80" 
+      - "443:443"
+    volumes: # diretorio da minha maquina:diretorio do container
+      - ${PWD}:/var/www/html
+      - ${PWD}/docker/php/7.4/config/httpd.conf:/etc/httpd/conf/httpd.conf
+      - ${PWD}/docker/php/7.4/config/php.ini:/usr/local/zend/etc/php.ini
+    networks: # nome da rede criada mais abaixo com a tag 'networks', todos que estiverem na mesma rede se comunicam
+      - net_local
+    depends_on:
+      - mysql
+      - memcached
+
+  memcached:
+    container_name: "memcached_local"
+    image: memcached
+    ports:
+      - "11211:11211"
+    networks:
+      - net_local
+
+networks:
+  net_local:
+    driver: bridge
+
+volumes:
+  # MySQL data
+  mysql_data3:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/docker/mysql/5.1.73/data
