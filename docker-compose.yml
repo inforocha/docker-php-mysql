@@ -25,6 +25,7 @@ services:
       - ${PWD}:/var/www/html
       - ${PWD}/docker/php/7.4/config/httpd.conf:/etc/httpd/conf/httpd.conf
       - ${PWD}/docker/php/7.4/config/php.ini:/usr/local/zend/etc/php.ini
+      - ${PWD}/docker/php/7.4/config/apache2.conf:/etc/apache/apache2.conf
     networks: # nome da rede criada mais abaixo com a tag 'networks', todos que estiverem na mesma rede se comunicam
       - net_local
     depends_on:
