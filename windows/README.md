@@ -1,14 +1,20 @@
+# Instalando docker
+
+https://docs.docker.com/desktop/windows/install/
+
+https://docs.microsoft.com/pt-br/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
+
 # PHP e Mysql
 
 `php 7.4 e 7.2`
 
 # Executando
 
-`docker-compose up`
+`docker-compose up --build`
 
 # Teste
 
-`http://localhost/`
+`http://localhost:8081/`
 
 # Comandos
 verificando os containers que estão rodando `docker ps`
