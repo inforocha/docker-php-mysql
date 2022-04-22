@@ -5,6 +5,8 @@
 # Executando
 
 `docker-compose up`
+Se precisar forçar o buid novamente do container
+`docker-compose up --build`
 
 # Teste
 

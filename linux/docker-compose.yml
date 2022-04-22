@@ -15,17 +15,17 @@ services:
 
   php:
     container_name: php #nome do container, nao podem existir containers com mesmo nome
-    image: php/7.4-apache # imagem que ele irah usar, para mudar a versao basta alterar o numero do php, ex: php/7.2-apache 
+    image: php/7.2-apache # imagem que ele irah usar, para mudar a versao basta alterar o numero do php, ex: php/7.2-apache 
     build:
-      context: docker/php/7.4 # a pasta de onde ele pega o dockerfile e a configuracao do container
+      context: docker/php/7.2 # a pasta de onde ele pega o dockerfile e a configuracao do container
     ports: # porta da minha maquina:porta do container
       - "8081:80" 
       - "443:443"
     volumes: # diretorio da minha maquina:diretorio do container
       - ${PWD}:/var/www/html
-      - ${PWD}/docker/php/7.4/config/httpd.conf:/etc/httpd/conf/httpd.conf
-      - ${PWD}/docker/php/7.4/config/php.ini:/usr/local/zend/etc/php.ini
-      - ${PWD}/docker/php/7.4/config/apache2.conf:/etc/apache/apache2.conf
+      - ${PWD}/docker/php/7.2/config/httpd.conf:/etc/httpd/conf/httpd.conf
+      - ${PWD}/docker/php/7.2/config/php.ini:/usr/local/zend/etc/php.ini
+      - ${PWD}/docker/php/7.2/config/apache2.conf:/etc/apache/apache2.conf
     networks: # nome da rede criada mais abaixo com a tag 'networks', todos que estiverem na mesma rede se comunicam
       - net_local
     depends_on:
